@@ -9,6 +9,7 @@ public class PPScript : MonoBehaviour
 
     private Vignette vig;
     private bool vigBool;
+    private bool vigTimer = true;
     private int vigIntensity=1;
 
     // Start is called before the first frame update
@@ -48,6 +49,13 @@ public class PPScript : MonoBehaviour
         {
             vigIntensity = 0;
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
+                vigIntensity = 4;
+
+ 
+        }
 
 
 
@@ -62,6 +70,19 @@ public class PPScript : MonoBehaviour
                     break;
                 case 0: vig.intensity.value = Mathf.Lerp(vig.intensity.value, .0f, 1f * Time.deltaTime);
                     break;
+                case 4: vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.65f, 1f * Time.deltaTime);
+                    if(vig.intensity.value >= 0.62f)
+                    {
+                        vigIntensity = 5;
+                    }
+                    break;
+                case 5: vig.intensity.value = Mathf.Lerp(vig.intensity.value, .5f, 1f * Time.deltaTime);
+                    if (vig.intensity.value <= .53f)
+                    {
+                        vigIntensity = 4;
+                    }
+                    break;
+
             }
         }
     }
