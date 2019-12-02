@@ -8,79 +8,120 @@ public class PPScript : MonoBehaviour
     public PostProcessVolume volume;
 
     private Vignette vig;
-    private bool vigBool;
+    private Grain grain;
     private bool vigTimer = true;
-    private int vigIntensity=1;
+    private int setPP;
+    private enum EffektEnum { vig =1, grain=2, none=0 };
+    private int ppIntensity=1;
 
     // Start is called before the first frame update
     void Start()
     {
         volume.profile.TryGetSettings(out vig);
+        volume.profile.TryGetSettings(out grain);
 
         vig.intensity.value = 0;
+        grain.intensity.value = 0;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ButtonInputs Vignette
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            vigBool = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            vigBool = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            vigIntensity = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            vigIntensity = 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            vigIntensity = 3;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            vigIntensity = 0;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-
-                vigIntensity = 4;
-
- 
-        }
-
-
-
-        if (vigBool) {
-            switch (vigIntensity)
+      
+            //ButtonInputs 
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                case 1: vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.55f, 1f * Time.deltaTime);
+                setPP = (int)EffektEnum.none;
+            }
+            else if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                setPP = (int)EffektEnum.none;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                setPP = (int)EffektEnum.vig;
+                ppIntensity = 1;
+            }
+             else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+              setPP = (int)EffektEnum.grain;
+                ppIntensity = 1;
+        }
+            else if (Input.GetKeyDown(KeyCode.Period))
+            {
+            ppIntensity++;
+            }
+            else if (Input.GetKeyDown(KeyCode.Minus))
+            {
+            ppIntensity--;
+        }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+
+               // vigIntensity = 4;
+
+
+            }
+        //Post processing aus
+        if (setPP == (int)EffektEnum.none)
+        {
+            vig.intensity.value = Mathf.Lerp(vig.intensity.value, .0f, 1f * Time.deltaTime);
+            grain.intensity.value = 0;
+        }
+
+        //Vignette
+        if (setPP == (int)EffektEnum.vig)
+        {
+            switch (ppIntensity)
+            {
+                case 1:
+                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.55f, 1f * Time.deltaTime);
                     break;
-                case 2: vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.6f, 1f * Time.deltaTime);
+                case 2:
+                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.6f, 1f * Time.deltaTime);
                     break;
-                case 3: vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.7f, 1f * Time.deltaTime);
+                case 3:
+                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.7f, 1f * Time.deltaTime);
                     break;
-                case 0: vig.intensity.value = Mathf.Lerp(vig.intensity.value, .0f, 1f * Time.deltaTime);
+
+                case 0:
+                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, .0f, 1f * Time.deltaTime);
                     break;
-                case 4: vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.65f, 1f * Time.deltaTime);
-                    if(vig.intensity.value >= 0.62f)
+                case 4:
+                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.65f, 1f * Time.deltaTime);
+                    if (vig.intensity.value >= 0.62f)
                     {
-                        vigIntensity = 5;
+                        ppIntensity = 5;
                     }
                     break;
-                case 5: vig.intensity.value = Mathf.Lerp(vig.intensity.value, .5f, 1f * Time.deltaTime);
+                default:
+                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, .5f, 1f * Time.deltaTime);
                     if (vig.intensity.value <= .53f)
                     {
-                        vigIntensity = 4;
+                        ppIntensity = 4;
                     }
+                    break;
+
+            }
+        }
+
+        //Grain
+        if (setPP == (int)EffektEnum.grain)
+        {
+            switch (ppIntensity)
+            {
+                default:
+                    grain.intensity.value = 0.4f;
+                    grain.size.value = 1.0f;
+                    ppIntensity = 0;
+                    break;
+                case 1:
+                    grain.intensity.value = 0.7f;
+                    grain.size.value = 1.1f;
+                    break;
+                case 2:
+                    grain.intensity.value = 1.5f;
                     break;
 
             }
