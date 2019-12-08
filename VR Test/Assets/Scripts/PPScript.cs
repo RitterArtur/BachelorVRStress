@@ -8,17 +8,25 @@ public class PPScript : MonoBehaviour
     public PostProcessVolume volume;
 
     private Vignette vig;
+    VignetteScript vigInstance;
+    GrainScript grainInstance;
     private Grain grain;
     private bool vigTimer = true;
     private int setPP;
     private enum EffektEnum { vig =1, grain=2, none=0 };
     private int ppIntensity=1;
+    public float speed = 5.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         volume.profile.TryGetSettings(out vig);
+        vigInstance = new VignetteScript();
+
         volume.profile.TryGetSettings(out grain);
+        grainInstance = new GrainScript();
+
+        
 
         vig.intensity.value = 0;
         grain.intensity.value = 0;
@@ -28,9 +36,10 @@ public class PPScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
-            //ButtonInputs 
-            if (Input.GetKeyDown(KeyCode.Return))
+
+
+        //ButtonInputs 
+        if (Input.GetKeyDown(KeyCode.Return))
             {
                 setPP = (int)EffektEnum.none;
             }
@@ -41,20 +50,20 @@ public class PPScript : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 setPP = (int)EffektEnum.vig;
-                ppIntensity = 1;
+                
             }
              else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-              setPP = (int)EffektEnum.grain;
-                ppIntensity = 1;
-        }
+              setPP = (int)EffektEnum.grain;           
+              
+            }
             else if (Input.GetKeyDown(KeyCode.Period))
             {
-            ppIntensity++;
+            increaseIntensity();
             }
             else if (Input.GetKeyDown(KeyCode.Minus))
             {
-            ppIntensity--;
+            decreaseIntensity();
         }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
@@ -63,6 +72,10 @@ public class PPScript : MonoBehaviour
 
 
             }
+        /*
+
+        */
+
         //Post processing aus
         if (setPP == (int)EffektEnum.none)
         {
@@ -70,61 +83,43 @@ public class PPScript : MonoBehaviour
             grain.intensity.value = 0;
         }
 
+        vig.intensity.value = vigInstance.vignetteValue(vig.intensity.value);
+
         //Vignette
         if (setPP == (int)EffektEnum.vig)
         {
-            switch (ppIntensity)
-            {
-                case 1:
-                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.55f, 1f * Time.deltaTime);
-                    break;
-                case 2:
-                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.6f, 1f * Time.deltaTime);
-                    break;
-                case 3:
-                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.7f, 1f * Time.deltaTime);
-                    break;
-
-                case 0:
-                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, .0f, 1f * Time.deltaTime);
-                    break;
-                case 4:
-                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, 0.65f, 1f * Time.deltaTime);
-                    if (vig.intensity.value >= 0.62f)
-                    {
-                        ppIntensity = 5;
-                    }
-                    break;
-                default:
-                    vig.intensity.value = Mathf.Lerp(vig.intensity.value, .5f, 1f * Time.deltaTime);
-                    if (vig.intensity.value <= .53f)
-                    {
-                        ppIntensity = 4;
-                    }
-                    break;
-
-            }
+            
+            //vig.intensity.value = vigInstance.vignetteValue(vig.intensity.value) ;
         }
 
         //Grain
         if (setPP == (int)EffektEnum.grain)
         {
-            switch (ppIntensity)
-            {
-                default:
-                    grain.intensity.value = 0.4f;
-                    grain.size.value = 1.0f;
-                    ppIntensity = 0;
-                    break;
-                case 1:
-                    grain.intensity.value = 0.7f;
-                    grain.size.value = 1.1f;
-                    break;
-                case 2:
-                    grain.intensity.value = 1.5f;
-                    break;
+            grain = grainInstance.grainValue(grain); 
+        }
+    }
 
-            }
+    void increaseIntensity()
+    {
+        if (setPP == (int)EffektEnum.vig)
+        {
+            vigInstance.increaseVignette();
+
+        }else if(setPP == (int)EffektEnum.grain)
+        {
+            grainInstance.increaseGrain();
+        }
+    }
+
+    void decreaseIntensity()
+    {
+        if (setPP == (int)EffektEnum.vig)
+        {
+            vigInstance.decreaseVignette();
+        }
+        else if (setPP == (int)EffektEnum.grain)
+        {
+            grainInstance.decreaseGrain();
         }
     }
 }
