@@ -20,6 +20,10 @@ MonoBehaviour:
   - {fileID: 114382297296672838}
   - {fileID: 114165717005318228}
   - {fileID: 5584407201137780627}
+  - {fileID: 4836186074997474525}
+  - {fileID: 6620004770022050575}
+  - {fileID: 2339191313217393378}
+  - {fileID: 8844765128100538978}
 --- !u!114 &114165717005318228
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -124,13 +128,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.964013, y: 0.99999994, z: 1, w: -0.20554984}
+    value: {x: 0, y: 1, z: 0.11706877, w: -0.20554984}
   gamma:
     overrideState: 1
-    value: {x: 0.8162455, y: 1, z: 0.8885649, w: -0.26721483}
+    value: {x: 0.8627281, y: 1, z: 0.101793885, w: -0.26721483}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.2621318, z: 0.6093248, w: -0.8427545}
+    value: {x: 1, y: 0, z: 0.45354557, w: -0.8427545}
   masterCurve:
     overrideState: 1
     value:
@@ -1472,7 +1476,7 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0
+    value: 1
   fastMode:
     overrideState: 1
     value: 1
@@ -1510,6 +1514,83 @@ MonoBehaviour:
   scale:
     overrideState: 0
     value: 1
+--- !u!114 &2339191313217393378
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
+  m_Name: AmbientOcclusion
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 1
+    value: 0
+  intensity:
+    overrideState: 1
+    value: 4
+  color:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 1}
+  ambientOnly:
+    overrideState: 1
+    value: 1
+  noiseFilterTolerance:
+    overrideState: 1
+    value: 0
+  blurTolerance:
+    overrideState: 1
+    value: -4.6
+  upsampleTolerance:
+    overrideState: 1
+    value: -12
+  thicknessModifier:
+    overrideState: 1
+    value: 10
+  directLightingStrength:
+    overrideState: 1
+    value: 0
+  radius:
+    overrideState: 1
+    value: 0.25
+  quality:
+    overrideState: 1
+    value: 2
+--- !u!114 &4836186074997474525
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
+  m_Name: DepthOfField
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  focusDistance:
+    overrideState: 1
+    value: 9.79
+  aperture:
+    overrideState: 1
+    value: 6.5
+  focalLength:
+    overrideState: 1
+    value: 129
+  kernelSize:
+    overrideState: 1
+    value: 3
 --- !u!114 &5584407201137780627
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1528,7 +1609,81 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 291
+    value: 31
   sampleCount:
     overrideState: 1
-    value: 15
+    value: 32
+--- !u!114 &6620004770022050575
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
+  m_Name: AutoExposure
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  filtering:
+    overrideState: 1
+    value: {x: 54, y: 99}
+  minLuminance:
+    overrideState: 1
+    value: 1.5
+  maxLuminance:
+    overrideState: 1
+    value: 4.1
+  keyValue:
+    overrideState: 1
+    value: 2
+  eyeAdaptation:
+    overrideState: 1
+    value: 0
+  speedUp:
+    overrideState: 1
+    value: 2
+  speedDown:
+    overrideState: 1
+    value: 1
+--- !u!114 &8844765128100538978
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a34fa72bd4185749832024e9c8010bf, type: 3}
+  m_Name: ScreenSpaceReflections
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  preset:
+    overrideState: 0
+    value: 2
+  maximumIterationCount:
+    overrideState: 0
+    value: 16
+  resolution:
+    overrideState: 0
+    value: 0
+  thickness:
+    overrideState: 0
+    value: 8
+  maximumMarchDistance:
+    overrideState: 0
+    value: 100
+  distanceFade:
+    overrideState: 0
+    value: 0.5
+  vignette:
+    overrideState: 0
+    value: 0.5
