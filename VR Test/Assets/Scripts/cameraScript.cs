@@ -19,6 +19,8 @@ public class cameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        OVRInput.Update();
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Rotate(0, -1, 0);
@@ -29,22 +31,22 @@ public class cameraScript : MonoBehaviour
             transform.Rotate(0, 1, 0);
         }
         // Strafe left
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft))
         {
             transform.position -= transform.right * speed;
         }
         // Move forward
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp))
         {
             transform.position += transform.forward * speed;
         }
         // Move backward
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown))
         {
             transform.position -= transform.forward * speed;
         }
         // Strafe right     
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickRight))
         {
             transform.position += transform.right * speed;
         }
