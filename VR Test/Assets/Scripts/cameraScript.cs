@@ -9,6 +9,7 @@ public class cameraScript : MonoBehaviour
 
 
     private float yaw = 0.0f;
+
     private float pitch = 0.0f;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class cameraScript : MonoBehaviour
     {
         OVRInput.Update();
 
+        
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Rotate(0, -1, 0);
@@ -50,7 +52,7 @@ public class cameraScript : MonoBehaviour
         {
             transform.position += transform.right * speed;
         }
-
+        
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             transform.position += speed * new Vector3(0, -Input.GetAxis("Mouse ScrollWheel"), 0);

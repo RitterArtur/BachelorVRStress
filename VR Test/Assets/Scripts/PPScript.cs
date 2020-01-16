@@ -28,7 +28,7 @@ public class PPScript : MonoBehaviour
 
         
 
-        vig.intensity.value = 0;
+     //   vig.intensity.value = 0;
         grain.intensity.value = 0;
 
     }
@@ -79,7 +79,7 @@ public class PPScript : MonoBehaviour
         //Post processing aus
         if (setPP == (int)EffektEnum.none)
         {
-            vig.intensity.value = Mathf.Lerp(vig.intensity.value, .0f, 1f * Time.deltaTime);
+           // vig.intensity.value = Mathf.Lerp(vig.intensity.value, .0f, 1f * Time.deltaTime);
             grain.intensity.value = 0;
         }
 

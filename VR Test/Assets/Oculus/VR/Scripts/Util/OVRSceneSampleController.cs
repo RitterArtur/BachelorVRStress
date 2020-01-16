@@ -200,6 +200,9 @@ public class OVRSceneSampleController : MonoBehaviour
         }
 
         playerController.SetRotationScaleMultiplier(rotationScaleMultiplier);
+
+
+
     }
 
     /// <summary>

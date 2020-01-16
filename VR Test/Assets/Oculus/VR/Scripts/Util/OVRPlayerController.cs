@@ -150,8 +150,11 @@ public class OVRPlayerController : MonoBehaviour
 	private float buttonRotation = 0f;
 	private bool ReadyToSnapTurn; // Set to true when a snap turn has occurred, code requires one frame of centered thumbstick to enable another snap turn.
 	private bool playerControllerEnabled = false;
+    public float CameraSpeed = 2.0f;
+    private float yaw = 0.0f;
+    private float pitch = 0.0f;
 
-	void Start()
+    void Start()
 	{
 		// Add eye-depth as a camera offset from the player controller
 		var p = CameraRig.transform.localPosition;
@@ -319,12 +322,12 @@ public class OVRPlayerController : MonoBehaviour
 
 		if (EnableLinearMovement)
 		{
-			bool moveForward = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-			bool moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
-			bool moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
-			bool moveBack = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+			bool moveForward = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp);
+			bool moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickLeft);
+			bool moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickRight);
+            bool moveBack = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown);
 
-			bool dpad_move = false;
+            bool dpad_move = false;
 
 			if (OVRInput.Get(OVRInput.Button.DpadUp))
 			{
@@ -372,9 +375,12 @@ public class OVRPlayerController : MonoBehaviour
 			if (moveRight)
 				MoveThrottle += ort * (transform.lossyScale.x * moveInfluence * BackAndSideDampen * Vector3.right);
 
+            //Mouse camera
+            yaw += CameraSpeed * Input.GetAxis("Mouse X");
+            transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 
 
-			moveInfluence = Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
+            moveInfluence = Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
 
 #if !UNITY_ANDROID // LeftTrigger not avail on Android game pad
 			moveInfluence *= 1.0f + OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
