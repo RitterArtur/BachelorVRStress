@@ -89,7 +89,7 @@ public class PPScript : MonoBehaviour
         if (setPP == (int)EffektEnum.vig)
         {
             
-            //vig.intensity.value = vigInstance.vignetteValue(vig.intensity.value) ;
+            vig.intensity.value = vigInstance.vignetteValue(vig.intensity.value) ;
         }
 
         //Grain
